@@ -7,10 +7,29 @@ AOS.init({
   // Navigation
   const navToggle = document.querySelector('.nav-toggle');
   const navMenuContainer = document.querySelector('.nav-menu-container');
+  const navLinks = document.querySelectorAll('.nav-menu a');
   
+  // Toggle menu
   navToggle.addEventListener('click', () => {
-    navMenuContainer.classList.toggle('active');
     navToggle.classList.toggle('active');
+    navMenuContainer.classList.toggle('active');
+  });
+  
+  // Close menu when clicking a link
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navMenuContainer.classList.remove('active');
+    });
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navToggle.contains(e.target) && 
+        !navMenuContainer.contains(e.target)) {
+        navToggle.classList.remove('active');
+        navMenuContainer.classList.remove('active');
+    }
   });
   
   // Smooth scroll for navigation links
@@ -42,74 +61,102 @@ AOS.init({
   // Auto advance slides
   setInterval(() => showSlide(currentSlide + 1), 5000);
   
-  // Product Modal
+  // Modal functionality
   const modal = document.getElementById('productModal');
-  const modalImage = document.getElementById('modalImage');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalDescription = document.getElementById('modalDescription');
-  const modalPrice = document.getElementById('modalPrice');
-  const closeModal = document.querySelector('.close-modal');
-  const shopNowBtn = document.querySelector('.shop-now-btn');
+  const modalImage = modal.querySelector('.product-image img');
+  const modalTitle = modal.querySelector('.product-title');
+  const modalPrice = modal.querySelector('.amount');
+  const modalDescription = modal.querySelector('.product-description');
+  const modalShopBtn = modal.querySelector('.btn-shop');
+  const closeBtn = modal.querySelector('.modal-close');
+  const closeModalBtn = modal.querySelector('[data-close]');
+  const productCards = document.querySelectorAll('.product-card');
   
-  const products = [
-    {
-        title: 'Bamboo Vase',
-        image: 'https://images.unsplash.com/photo-1598293868473-3c2372ad8edc?auto=format&fit=crop&q=80',
-        description: 'Hand-crafted bamboo vase featuring intricate patterns and natural finish. Perfect for modern and traditional spaces alike.',
-        price: '$129.99',
-        paystackUrl: 'https://paystack.shop/bamboo-art-vase'
+  // Product data
+  const products = {
+    'Bamboo Side Bag': {
+        price: '180.00',
+        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-side-bag',
+        description: 'A stylish and practical side bag made from sustainable bamboo. Perfect for everyday use, this bag combines traditional craftsmanship with modern design.'
     },
-    {
-        title: 'Wall Art',
-        image: 'https://images.unsplash.com/photo-1596306499317-8490232098fa?auto=format&fit=crop&q=80',
-        description: 'Contemporary bamboo wall art that brings nature indoors. Each piece is uniquely designed and carefully assembled.',
-        price: '$249.99',
-        paystackUrl: 'https://paystack.shop/bamboo-art-wall'
+    'Bamboo School Bag': {
+        price: '150.00',
+        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-school-bag',
+        description: 'Durable and eco-friendly school bag designed for students. Features comfortable straps and multiple compartments for books and supplies.'
     },
-    {
-        title: 'Bamboo Lamp',
-        image: 'https://images.unsplash.com/photo-1533228705496-072ca298b122?auto=format&fit=crop&q=80',
-        description: 'Modern bamboo lamp with ambient lighting. Combines traditional craftsmanship with contemporary design.',
-        price: '$179.99',
-        paystackUrl: 'https://paystack.shop/bamboo-art-lamp'
+    'Bamboo Traveling Bag': {
+        price: '250.00',
+        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-traveling-bag',
+        description: 'Spacious and elegant traveling bag perfect for weekend getaways. Made with premium bamboo material for durability and style.'
     },
-    {
-      title: 'Bamboo Lamp',
-      image: 'https://images.unsplash.com/photo-1533228705496-072ca298b122?auto=format&fit=crop&q=80',
-      description: 'Modern bamboo lamp with ambient lighting. Combines traditional craftsmanship with contemporary design.',
-      price: '$179.99',
-      paystackUrl: 'https://paystack.shop/bamboo-art-lamp'
+    'Bamboo Art Fan': {
+        price: '80.00',
+        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-art-fan',
+        description: 'Beautiful hand-crafted bamboo fan featuring intricate traditional designs. A perfect blend of art and functionality.'
+    },
+    'Bamboo Hand Bag': {
+        price: '200.00',
+        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-hand-bag',
+        description: 'Elegant handbag crafted from premium bamboo. Features a unique design pattern and comfortable handles for everyday use.'
+    }
+  };
+  
+  // Open modal function
+  function openModal(image, title) {
+    const product = products[title];
+    
+    modalImage.src = image;
+    modalTitle.textContent = title;
+    modalPrice.textContent = product.price;
+    modalDescription.textContent = product.description;
+    
+    // Update shop now button
+    modalShopBtn.onclick = () => window.open(product.link, '_blank');
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
-  ];
   
-  let currentProductIndex = 0;
+  // Close modal function
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
   
-  document.querySelectorAll('.view-details').forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-        currentProductIndex = index;
-        modalImage.src = products[index].image;
-        modalTitle.textContent = products[index].title;
-        modalDescription.textContent = products[index].description;
-        modalPrice.textContent = products[index].price;
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+  // Add click event listeners to all view details buttons
+  document.querySelectorAll('.view-details').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const card = e.target.closest('.product-card');
+        const image = card.querySelector('img').src;
+        const title = card.querySelector('h3').textContent;
+        openModal(image, title);
     });
   });
   
-  shopNowBtn.addEventListener('click', () => {
-    const product = products[currentProductIndex];
-    window.open(product.paystackUrl, '_blank');
+  // Add click event listeners to all shop now buttons
+  document.querySelectorAll('.shop-now').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const card = e.target.closest('.product-card');
+        const title = card.querySelector('h3').textContent;
+        window.open(products[title].link, '_blank');
+    });
   });
   
-  closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  });
+  // Close modal with close button
+  closeBtn.addEventListener('click', closeModal);
+  closeModalBtn.addEventListener('click', closeModal);
   
-  window.addEventListener('click', (e) => {
+  // Close modal when clicking outside
+  modal.addEventListener('click', (e) => {
     if (e.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        closeModal();
+    }
+  });
+  
+  // Close modal with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
     }
   });
   
@@ -143,7 +190,6 @@ AOS.init({
   
   // Active navigation highlight
   const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.nav-menu a');
   
   window.addEventListener('scroll', () => {
     let current = '';
