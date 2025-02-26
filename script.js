@@ -61,104 +61,130 @@ AOS.init({
   // Auto advance slides
   setInterval(() => showSlide(currentSlide + 1), 5000);
   
-  // Modal functionality
-  const modal = document.getElementById('productModal');
-  const modalImage = modal.querySelector('.product-image img');
-  const modalTitle = modal.querySelector('.product-title');
-  const modalPrice = modal.querySelector('.amount');
-  const modalDescription = modal.querySelector('.product-description');
-  const modalShopBtn = modal.querySelector('.btn-shop');
-  const closeBtn = modal.querySelector('.modal-close');
-  const closeModalBtn = modal.querySelector('[data-close]');
-  const productCards = document.querySelectorAll('.product-card');
-  
-  // Product data
-  const products = {
+ // Modal functionality
+const modal = document.getElementById('productModal');
+const modalImage = modal.querySelector('.product-image img');
+const modalTitle = modal.querySelector('.product-title');
+const modalPrice = modal.querySelector('.amount');
+const modalDescription = modal.querySelector('.product-description');
+const modalShopBtn = modal.querySelector('.btn-shop');
+const closeBtn = modal.querySelector('.modal-close');
+const closeModalBtn = modal.querySelector('[data-close]');
+const productCards = document.querySelectorAll('.product-card');
+
+// Product data
+const products = {
     'Bamboo Side Bag': {
         price: '180.00',
-        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-side-bag',
-        description: 'A stylish and practical side bag made from sustainable bamboo. Perfect for everyday use, this bag combines traditional craftsmanship with modern design.'
+        link: 'https://paystack.shop/isaac-eco-bamboo-art',
+        description: 'A stylish and practical side bag made from sustainable bamboo.'
     },
-    'Bamboo School Bag': {
+    'Bamboo School Bag 1': {
         price: '150.00',
-        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-school-bag',
-        description: 'Durable and eco-friendly school bag designed for students. Features comfortable straps and multiple compartments for books and supplies.'
+        link: 'https://paystack.shop/isaac-eco-bamboo-art',
+        description: 'Durable and eco-friendly school bag designed for students.'
     },
     'Bamboo Traveling Bag': {
         price: '250.00',
-        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-traveling-bag',
-        description: 'Spacious and elegant traveling bag perfect for weekend getaways. Made with premium bamboo material for durability and style.'
+        link: 'https://paystack.shop/isaac-eco-bamboo-art',
+        description: 'Spacious and elegant traveling bag perfect for weekend getaways.'
     },
     'Bamboo Art Fan': {
         price: '80.00',
-        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-art-fan',
-        description: 'Beautiful hand-crafted bamboo fan featuring intricate traditional designs. A perfect blend of art and functionality.'
+        link: 'https://paystack.shop/isaac-eco-bamboo-art',
+        description: 'Beautiful hand-crafted bamboo fan featuring intricate traditional designs.'
     },
     'Bamboo Hand Bag': {
         price: '200.00',
-        link: 'https://paystack.shop/isaac-eco-bamboo/bamboo-hand-bag',
-        description: 'Elegant handbag crafted from premium bamboo. Features a unique design pattern and comfortable handles for everyday use.'
-    }
-  };
-  
-  // Open modal function
-  function openModal(image, title) {
+        link: 'https://paystack.shop/isaac-eco-bamboo-art',
+        description: 'Elegant handbag crafted from premium bamboo.'
+    },
+    'Bamboo Bag': {
+        price: '200.00',
+        link: 'https://paystack.shop/isaac-eco-bamboo-art',
+        description: 'Elegant handbag crafted from premium bamboo.'
+    },
+};
+
+// Open modal function
+function openModal(image, title) {
     const product = products[title];
-    
+
+    if (!product) {
+        console.error(`Product "${title}" not found in products list.`);
+        return;
+    }
+
     modalImage.src = image;
     modalTitle.textContent = title;
     modalPrice.textContent = product.price;
     modalDescription.textContent = product.description;
-    
+
     // Update shop now button
     modalShopBtn.onclick = () => window.open(product.link, '_blank');
-    
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-  }
-  
-  // Close modal function
-  function closeModal() {
+
+    // Focus on the first interactive element inside the modal
+    modal.querySelector('.modal-close').focus();
+}
+
+// Close modal function
+function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
-  }
-  
-  // Add click event listeners to all view details buttons
-  document.querySelectorAll('.view-details').forEach(button => {
-    button.addEventListener('click', (e) => {
-        const card = e.target.closest('.product-card');
-        const image = card.querySelector('img').src;
-        const title = card.querySelector('h3').textContent;
-        openModal(image, title);
-    });
+    modalShopBtn.textContent = 'Shop Now'; // Reset button text
+    modalShopBtn.disabled = false;
+
+    // Return focus to the previously active element
+    document.activeElement.blur();
+}
+
+// Add click event listeners to all view details buttons
+document.querySelectorAll('.view-details').forEach(button => {
+  button.addEventListener('click', (e) => {
+      const card = e.target.closest('.product-card');
+      if (!card) return;
+
+      const title = card.dataset.title;
+      const image = card.querySelector('img').src;
+
+      openModal(image, title);
   });
-  
-  // Add click event listeners to all shop now buttons
-  document.querySelectorAll('.shop-now').forEach(button => {
+});
+
+// Add click event listeners to all shop now buttons
+document.querySelectorAll('.shop-now').forEach(button => {
     button.addEventListener('click', (e) => {
+        e.preventDefault();
         const card = e.target.closest('.product-card');
-        const title = card.querySelector('h3').textContent;
-        window.open(products[title].link, '_blank');
+        const title = card.dataset.title;
+
+        if (products[title]) {
+            window.open(products[title].link, '_blank');
+        }
     });
-  });
-  
-  // Close modal with close button
-  closeBtn.addEventListener('click', closeModal);
-  closeModalBtn.addEventListener('click', closeModal);
-  
-  // Close modal when clicking outside
-  modal.addEventListener('click', (e) => {
+});
+
+// Close modal with close buttons
+[closeBtn, closeModalBtn].forEach(button => {
+    button.addEventListener('click', closeModal);
+});
+
+// Close modal when clicking outside
+modal.addEventListener('click', (e) => {
     if (e.target === modal) {
         closeModal();
     }
-  });
-  
-  // Close modal with Escape key
-  document.addEventListener('keydown', (e) => {
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('active')) {
         closeModal();
     }
-  });
+});
   
   // Horizontal scroll for products
   const productsSlider = document.querySelector('.products-slider');
