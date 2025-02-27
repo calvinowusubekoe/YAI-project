@@ -69,7 +69,7 @@ const modalPrice = modal.querySelector('.amount');
 const modalDescription = modal.querySelector('.product-description');
 const modalShopBtn = modal.querySelector('.btn-shop');
 const closeBtn = modal.querySelector('.modal-close');
-const closeModalBtn = modal.querySelector('[data-close]');
+// const closeModalBtn = modal.querySelector('[data-close]');
 const productCards = document.querySelectorAll('.product-card');
 
 // Product data
@@ -79,7 +79,7 @@ const products = {
         link: 'https://paystack.shop/isaac-eco-bamboo-art',
         description: 'A stylish and practical side bag made from sustainable bamboo.'
     },
-    'Bamboo School Bag 1': {
+    'Bamboo School Bag': {
         price: '150.00',
         link: 'https://paystack.shop/isaac-eco-bamboo-art',
         description: 'Durable and eco-friendly school bag designed for students.'
@@ -102,7 +102,7 @@ const products = {
     'Bamboo Bag': {
         price: '200.00',
         link: 'https://paystack.shop/isaac-eco-bamboo-art',
-        description: 'Elegant handbag crafted from premium bamboo.'
+        description: 'Elegant bag crafted from premium bamboo featuring intricate designs.'
     },
 };
 
@@ -168,7 +168,7 @@ document.querySelectorAll('.shop-now').forEach(button => {
 });
 
 // Close modal with close buttons
-[closeBtn, closeModalBtn].forEach(button => {
+[closeBtn].forEach(button => {
     button.addEventListener('click', closeModal);
 });
 

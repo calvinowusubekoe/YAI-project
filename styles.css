@@ -24,7 +24,7 @@
 
 ::-webkit-scrollbar-thumb {
     background: var(--accent-color);
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -124,6 +124,7 @@ body {
     transition: all 0.3s ease;
 }
 
+
 /* Mobile Navigation */
 @media (max-width: 1024px) {
     .nav-toggle {
@@ -178,6 +179,57 @@ body {
         padding: 0.8rem;
     }
 }
+
+.nav-shop-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a570d, #18ac20);
+    color: #fff;
+    font-size: 0.9rem; /* Reduced font size */
+    font-weight: bold;
+    padding: 8px 16px; /* Smaller padding */
+    border: none;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Remove default link styling */
+.nav-shop-btn a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Hover Effect */
+.nav-shop-btn:hover {
+    background: linear-gradient(135deg, #18ac20, #1a570d);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Active/Click Effect */
+.nav-shop-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile-Friendly Adjustments */
+@media (max-width: 480px) {
+    .nav-shop-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+
+
 
 /* Hero Section */
 .hero {
@@ -905,7 +957,6 @@ body {
 }
 
 /* Contact Section */
-/* General Styles */
 .contact {
     padding: 6rem 0;
     background: linear-gradient(135deg, #f9f9f9 0%, rgba(76, 175, 80, 0.05) 100%);
@@ -1048,7 +1099,7 @@ body {
     overflow: hidden;
 }
 
-.contact-form::before {
+/* .contact-form::before {
     content: "";
     position: absolute;
     top: -20px;
@@ -1060,7 +1111,7 @@ body {
     z-index: -1;
     filter: blur(20px);
     opacity: 0.2;
-}
+} */
 
 .form-group {
     margin-bottom: 1.5rem;
@@ -1081,7 +1132,7 @@ body {
     width: 100%;
     padding: 1rem;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 4px;
     font-size: 1rem;
     transition: all 0.3s ease;
     background: transparent;
@@ -1093,6 +1144,7 @@ body {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
 }
+
 
 .submit-btn {
     background: var(--primary-color);
