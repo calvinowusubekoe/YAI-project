@@ -229,7 +229,7 @@ document.addEventListener('keydown', (e) => {
   
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
+        if (link.getAttribute('href').includes(current)) {
             link.classList.add('active');
         }
     });

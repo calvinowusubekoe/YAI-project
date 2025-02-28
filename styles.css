@@ -959,9 +959,10 @@ body {
 /* Contact Section */
 .contact {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #f9f9f9 0%, rgba(76, 175, 80, 0.05) 100%);
+    background: linear-gradient(135deg, #defce9 0%, #caf1ca 100%);
     position: relative;
     overflow: hidden;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .contact::before {
@@ -971,15 +972,15 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    opacity: 0.1;
+    background: url('https://res.cloudinary.com/dswfnaydo/image/upload/v1740738426/eco-friendly_bamboo_products_pfusik.webp') repeat;
+    opacity: 0.05;
     z-index: -1;
-    filter: blur(10px);
 }
 
 .contact .section-header {
     text-align: center;
     margin-bottom: 3rem;
+    animation: slideIn 1s ease-out;
 }
 
 .contact h2 {
@@ -1028,17 +1029,18 @@ body {
 .contact-card {
     background: white;
     padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    animation: fadeInUp 1s ease-out;
 }
 
 .contact-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 .contact-card::before {
@@ -1093,25 +1095,12 @@ body {
 .contact-form {
     background: white;
     padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
+    animation: fadeInUp 1s ease-out;
 }
-
-/* .contact-form::before {
-    content: "";
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    border-radius: 25px;
-    z-index: -1;
-    filter: blur(20px);
-    opacity: 0.2;
-} */
 
 .form-group {
     margin-bottom: 1.5rem;
@@ -1132,7 +1121,7 @@ body {
     width: 100%;
     padding: 1rem;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 20px;
     font-size: 1rem;
     transition: all 0.3s ease;
     background: transparent;
@@ -1144,7 +1133,6 @@ body {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
 }
-
 
 .submit-btn {
     background: var(--primary-color);
@@ -1196,6 +1184,38 @@ body {
 
 .submit-btn:hover i {
     transform: translateX(10px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* Responsive Design */
@@ -1255,19 +1275,24 @@ body {
     color: #fff;
     padding: var(--section-spacing) 0 2rem;
     position: relative;
+    overflow: hidden;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: clamp(2rem, 5vw, 3rem);
     margin-bottom: 3rem;
+    padding: 0 var(--container-padding);
 }
 
 .footer-brand {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    align-items: center;
+    text-align: center;
 }
 
 .footer-brand h3 {
@@ -1291,13 +1316,15 @@ body {
     color: #fff;
     margin: 0 0 1.5rem;
     position: relative;
+    text-align: center;
 }
 
 .footer-links h3::after,
 .footer-social h3::after {
     content: '';
     position: absolute;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: -0.5rem;
     width: 40px;
     height: 2px;
@@ -1308,6 +1335,7 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
+    text-align: center;
 }
 
 .footer-links ul li {
@@ -1329,7 +1357,8 @@ body {
     width: 0;
     height: 1px;
     bottom: -2px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #4CAF50;
     transition: width 0.3s ease;
 }
@@ -1344,6 +1373,7 @@ body {
 
 .social-links {
     display: flex;
+    justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
 }
@@ -1627,150 +1657,7 @@ body {
     animation: slideIn 1s ease-out;
 }
 
-/* Newsletter Styles */
-.footer-newsletter {
-    background: rgba(76, 175, 80, 0.1);
-    padding: 2rem;
-    border-radius: 10px;
-    margin: 2rem 0;
-    text-align: center;
-}
 
-.footer-newsletter h3 {
-    color: #4CAF50;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.footer-newsletter p {
-    color: #999;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.newsletter-form {
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.form-group {
-    display: flex;
-    gap: 1rem;
-    background: white;
-    padding: 0.5rem;
-    border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.form-group input {
-    flex: 1;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    color: #333;
-    background: transparent;
-}
-
-.form-group input:focus {
-    outline: none;
-}
-
-.form-group input::placeholder {
-    color: #999;
-}
-
-.form-group button {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.form-group button:hover {
-    background: #45a049;
-    transform: translateY(-2px);
-}
-
-.form-group button i {
-    font-size: 0.9rem;
-    transition: transform 0.3s ease;
-}
-
-.form-group button:hover i {
-    transform: translateX(3px);
-}
-
-/* Newsletter Responsive Styles */
-@media (max-width: 768px) {
-    .footer-newsletter {
-        padding: 1.5rem;
-        margin: 1.5rem 0;
-    }
-
-    .footer-newsletter h3 {
-        font-size: 1.3rem;
-    }
-
-    .footer-newsletter p {
-        font-size: 0.95rem;
-        margin-bottom: 1.2rem;
-    }
-
-    .form-group {
-        flex-direction: column;
-        background: transparent;
-        padding: 0;
-        box-shadow: none;
-        gap: 0.8rem;
-    }
-
-    .form-group input {
-        width: 100%;
-        background: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group button {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer-newsletter {
-        padding: 1.2rem;
-        margin: 1rem 0;
-    }
-
-    .footer-newsletter h3 {
-        font-size: 1.2rem;
-    }
-
-    .footer-newsletter p {
-        font-size: 0.9rem;
-    }
-
-    .form-group input {
-        padding: 0.7rem 1.2rem;
-    }
-
-    .form-group button {
-        padding: 0.7rem 1.5rem;
-        font-size: 0.95rem;
-    }
-}
 
 /* Modal animation */
 @keyframes modalSlideIn {
@@ -1921,4 +1808,9 @@ body {
     .footer-newsletter button {
         width: 100%;
     }
+}
+
+.nav-menu a.active {
+    color: var(--primary-color);
+    font-weight: bold;
 }
